@@ -1,0 +1,70 @@
+.navbar-container {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* Navbar itself */
+.navbar {
+  pointer-events: auto;
+  width: 90%;
+  max-width: 1100px;
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+
+  background: rgba(10, 14, 25, 0.75);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+
+  /* key */
+  transition: top 0.3s ease-in-out, opacity 0.3s ease , padding 0.3s ease;
+  top: 0;           /* visible */
+  opacity: 1;
+}
+
+.navbar.hidden {
+  top: -100px;      /* slide up */
+  opacity: 0;
+}
+
+.navbar:not(.hidden) {
+  backdrop-filter: blur(16px);
+}
+
+.navbar .scrolled {
+  padding: 10px 24px;
+}
+
+
+.navbar-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+
+.navbar-links li {
+  cursor: pointer;
+  position: relative;
+}
+
+.navbar-links li::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -6px;
+  left: 0;
+  background: var(--primary);
+  transition: var(--transition-fast);
+}
+
+.navbar-links li:hover::after {
+  width: 100%;
+}

@@ -1,0 +1,23 @@
+/* src/styles/variables.css */
+:root {
+  /* Colors */
+  --bg-main: #05070d;
+  --bg-secondary: #0b0f1a;
+
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.15);
+
+  --primary: #00e5ff;
+  --accent: #7c4dff;
+
+  --text-main: #eaeaea;
+  --text-muted: #9ca3af;
+
+  /* Effects */
+  --blur: blur(14px);
+  --radius: 16px;
+
+  /* Motion */
+  --transition-fast: 0.2s ease;
+  --transition: 0.35s ease;
+}

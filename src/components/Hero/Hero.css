@@ -1,0 +1,54 @@
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  filter: blur(2px) brightness(0.7);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(5,7,13,0.85),
+    rgba(5,7,13,0.97)
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  margin-top: 30vh;
+}
+
+.terminal-line {
+  font-family: monospace;
+  color: var(--primary);
+}
+
+.cursor {
+  animation: blink 1s infinite;
+}
+
+.hero-content {
+  animation: heroEnter 1s ease-out 0.3s both;
+}
+
+@keyframes heroEnter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

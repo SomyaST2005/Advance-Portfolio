@@ -1,0 +1,76 @@
+.contact {
+  background: radial-gradient(
+    circle at bottom,
+    #0b1020,
+    var(--bg-main)
+  );
+  text-align: center;
+}
+
+.terminal {
+  max-width: 600px;
+  margin: 60px auto 0;
+  text-align: left;
+  font-family: 'Courier New', monospace;
+}
+
+.terminal-header {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.red { background: #ff5f56; }
+.yellow { background: #ffbd2e; }
+.green { background: #27c93f; }
+
+.terminal-body {
+  font-size: 0.95rem;
+}
+
+.prompt {
+  color: var(--primary);
+  margin-right: 6px;
+}
+
+.terminal-line {
+  margin-bottom: 10px;
+  animation: typingFade 0.6s ease both;
+}
+
+@keyframes typingFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+
+.terminal-output {
+  color: var(--text-muted);
+  margin: 12px 0 18px;
+}
+
+.terminal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.terminal-links a {
+  color: var(--accent);
+  border-bottom: 1px solid transparent;
+  transition: var(--transition-fast);
+}
+
+.terminal-links a:hover {
+  border-color: var(--accent);
+}
+
+.cursor {
+  animation: blink 1s infinite;
+}
