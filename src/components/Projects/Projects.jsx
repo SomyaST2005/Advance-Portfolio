@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import './Projects.css';
+import { useState, useEffect } from "react";
+import "./Projects.css";
 
 const projectsData = [
   {
@@ -33,6 +33,11 @@ const projectsData = [
 export default function Projects() {
   const [activeProject, setActiveProject] = useState(null);
 
+  useEffect(() => {
+    document.body.style.overflow = activeProject ? "hidden" : "auto";
+    return () => (document.body.style.overflow = "auto");
+  }, [activeProject]);
+
   return (
     <section className="projects" id="projects">
       <h2 className="section-title reveal">Projects</h2>
@@ -52,8 +57,8 @@ export default function Projects() {
       </div>
 
       {activeProject && (
-        <div className="project-modal">
-          <div className="project-modal-content glass-card">
+        <div className="project-overlay">
+          <div className="project-modal glass-card">
             <button
               className="close-btn"
               onClick={() => setActiveProject(null)}

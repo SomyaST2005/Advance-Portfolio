@@ -1,5 +1,6 @@
 .projects {
   background: var(--bg-main);
+  position: relative;
 }
 
 .projects-grid {
@@ -34,43 +35,58 @@
 
 /* Hover effect */
 .project-card:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 0 35px rgba(124,77,255,0.4);
   transform: translateY(-10px) rotateX(3deg);
+  box-shadow: 0 0 35px rgba(124,77,255,0.4);
 }
 
-/* MODAL */
-.project-modal {
-  position: fixed;
+/* ===== MODAL (PORTAL-SAFE) ===== */
+/* SAFE MODAL CONTAINER */
+.project-overlay {
+  position: absolute;
   inset: 0;
-  background: rgba(5, 7, 13, 0.85);
+  background: rgba(5, 7, 13, 0.75);
+  backdrop-filter: blur(10px);
+
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 200;
+
+  z-index: 10;
 }
 
-.project-modal-content {
-  max-width: 600px;
+/* Modal sticks relative to viewport scroll */
+.project-modal {
+  position: sticky;
+  top: 120px; /* below navbar */
   width: 90%;
-  position: relative;
+  max-width: 600px;
+
+  padding: 24px 28px;
 }
 
+.project-modal-inner {
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+  padding: 24px 32px;
+}
+
+/* Close button */
 .close-btn {
   position: absolute;
-  top: 14px;
-  right: 18px;
+  top: 12px;
+  right: 16px;
   background: none;
   border: none;
   color: var(--text-main);
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   cursor: pointer;
 }
 
+/* Modal sections */
 .modal-section {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
-
 .modal-section strong {
   color: var(--primary);
   display: block;
