@@ -1,8 +1,11 @@
 import './Hero.css';
 import { assets } from '../../assets/assets';
 import React, { useEffect } from 'react';
+import { useSystem } from '../../context/SystemContext';
 
 function Hero() {
+
+  const {setSystemUnlocked} = useSystem();
 
   useEffect(() => {
     const hero = document.querySelector(".hero");
@@ -65,7 +68,7 @@ function Hero() {
         </p>
 
         <div className="hero-actions">
-          <button className="neon-btn">Enter System</button>
+          <button className="neon-btn" onClick={() => setSystemUnlocked(true)}>Enter System</button>
           <a href="#projects" className="ghost-btn">View Projects</a>
         </div>
 

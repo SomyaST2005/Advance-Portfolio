@@ -9,6 +9,11 @@ import Contact from './components/Contact/Contact';
 import useReveal from './useReveal';
 
 import { useEffect, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useSystem } from "./context/SystemContext.jsx";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Global styles
 import './styles/reset.css';
@@ -24,7 +29,8 @@ function App() {
   useReveal();
 
   const [introDone, setIntroDone] = useState(false);
-  
+  const { systemUnlocked } = useSystem();
+
   useEffect(() => {
     const cursor = document.createElement("div");
     cursor.className = "glow-cursor";
@@ -70,31 +76,45 @@ function App() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!systemUnlocked) return;
+
+    const tl = gsap.timeline();
+
+    tl.to(".hero", {
+      scale: 0.95,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power2.out"
+    })
+    .set(".hero", { display: "none" })
+    .to(".story", {
+      opacity: 1,
+      pointerEvents: "auto",
+      duration: 0.6
+    })
+    .from(".story > section", {
+      y: 60,
+      opacity: 0,
+      stagger: 0.15,
+      duration: 0.8,
+      ease: "power2.out"
+    });
+
+  }, [systemUnlocked]);
   
   return (
     <>
       {!introDone && <Intro onFinish={() => setIntroDone(true)} />}
-
-      {/* Floating Navigation */}
       <Navbar />
-
-      {/* Hero Section */}
       <Hero />
-
-      {/* Skills */}
-      <Skills />
-
-      {/* Projects */}
-      <Projects />
-
-      {/* Cybersecurity Showcase */}
-      <Security />
-
-      {/* About / Journey */}
-      <About />
-
-      {/* Contact / Terminal */}
-      <Contact />
+      <div className="story">
+        <About />
+        <Skills />
+        <Projects />
+        <Security />
+        <Contact />
+      </div>
     </>
   );
 }

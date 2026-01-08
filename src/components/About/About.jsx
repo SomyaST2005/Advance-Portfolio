@@ -1,6 +1,26 @@
 import './About.css';
+import { useEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 
 export default function About() {
+
+  useEffect(() => {
+    gsap.from(".about-content", {
+      scrollTrigger: {
+        trigger: ".about",
+        start: "top center",
+        end: "+=200",
+        scrub: true
+      },
+      y: 80,
+      opacity: 0
+    });
+  }, []);
+
   return (
     <section className="about" id="about">
       <h2 className="section-title reveal">Engineering Journey</h2>

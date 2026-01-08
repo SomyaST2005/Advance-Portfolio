@@ -56,3 +56,8 @@ html {
     transition: none !important;
   }
 }
+
+.story {
+  opacity: 0;
+  pointer-events: none;
+}
