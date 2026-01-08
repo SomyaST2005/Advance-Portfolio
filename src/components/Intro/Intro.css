@@ -1,0 +1,67 @@
+.intro {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #0a0e19, #05070d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: introOut 3.2s ease forwards;
+}
+
+.intro-terminal {
+  font-family: monospace;
+  font-size: 0.95rem;
+  color: #9efcff;
+  text-align: left;
+  min-width: 320px;
+}
+
+.line {
+  opacity: 0;
+  transform: translateY(6px);
+  animation: typeIn 0.4s ease forwards;
+}
+
+.l1 { animation-delay: 0.3s; }
+.l2 { animation-delay: 0.8s; }
+.l3 { animation-delay: 1.2s; }
+.l4 { animation-delay: 1.6s; }
+.l5 { animation-delay: 2.2s; }
+
+.access {
+  margin-top: 12px;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  color: #00eaff;
+  text-shadow: 0 0 20px rgba(0,234,255,0.6);
+  animation: accessPop 0.4s ease-out forwards;
+  animation-delay: 2.2s;
+}
+
+@keyframes typeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes introOut {
+  0% { opacity: 1; }
+  85% { opacity: 1; }
+  100% {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+@keyframes accessPop {
+  from {
+    transform: scale(0.96);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

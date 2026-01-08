@@ -101,9 +101,16 @@
   box-shadow:
     0 0 0 1px rgba(124,77,255,0.15),
     0 20px 60px rgba(0,0,0,0.6);
+  opacity: 0;
+  transform: translateY(24px) scale(0.98);
+  animation: heroReveal 0.9s ease-out 3.2s forwards;
+}
 
-  animation: heroEnter 0.9s ease-out both;
-  transform: perspective(1200px) rotateY(-4deg);
+@keyframes heroReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .hero-name {

@@ -49,3 +49,10 @@ html {
   transform: translate(-50%, -50%);
   z-index: 9999;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

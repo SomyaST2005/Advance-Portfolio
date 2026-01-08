@@ -1,3 +1,4 @@
+import Intro from "./components/Intro/Intro";
 import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
 import Skills from './components/Skills/Skills';
@@ -7,7 +8,7 @@ import About from './components/About/About';
 import Contact from './components/Contact/Contact';
 import useReveal from './useReveal';
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // Global styles
 import './styles/reset.css';
@@ -22,6 +23,8 @@ import './components/shared/Animations.css';
 function App() {
   useReveal();
 
+  const [introDone, setIntroDone] = useState(false);
+  
   useEffect(() => {
     const cursor = document.createElement("div");
     cursor.className = "glow-cursor";
@@ -70,6 +73,8 @@ function App() {
   
   return (
     <>
+      {!introDone && <Intro onFinish={() => setIntroDone(true)} />}
+
       {/* Floating Navigation */}
       <Navbar />
 
