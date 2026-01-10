@@ -46,6 +46,17 @@ export default function Skills() {
             />
           ))
         }
+
+        {hoveredSkill?.examples && (
+          <div className="skill-info-panel">
+            <h3>{hoveredSkill.label}</h3>
+            <ul>
+              {hoveredSkill.examples.map((ex, i) => (
+                <li key={i}>▸ {ex}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </section>
   );
