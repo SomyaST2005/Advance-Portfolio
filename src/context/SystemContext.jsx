@@ -1,9 +1,13 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const SystemContext = createContext();
 
 export function SystemProvider({ children }) {
   const [systemUnlocked, setSystemUnlocked] = useState(false);
+
+  useEffect(() => {
+    setSystemUnlocked(false);
+  }, []);
 
   return (
     <SystemContext.Provider value={{ systemUnlocked, setSystemUnlocked }}>

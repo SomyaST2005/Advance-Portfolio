@@ -4,6 +4,8 @@
     var(--bg-secondary),
     var(--bg-main)
   );
+  min-height: 80vh; /* VERY IMPORTANT */
+  padding: 120px 0;
 }
 
 .timeline {
@@ -17,6 +19,8 @@
   position: relative;
   padding-top: 40px;
   transition: var(--transition);
+  opacity:1;
+  transform: none;
 }
 
 .timeline-year {

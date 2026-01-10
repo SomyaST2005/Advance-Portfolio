@@ -1,63 +1,69 @@
-import './About.css';
-import { useEffect } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import "./About.css";
+import { motion } from "framer-motion";
 
-gsap.registerPlugin(ScrollTrigger);
+const container = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
 
+const item = {
+  hidden: { opacity: 0, y: 40 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+};
 
 export default function About() {
-
-  useEffect(() => {
-    gsap.from(".about-content", {
-      scrollTrigger: {
-        trigger: ".about",
-        start: "top center",
-        end: "+=200",
-        scrub: true
-      },
-      y: 80,
-      opacity: 0
-    });
-  }, []);
-
   return (
     <section className="about" id="about">
-      <h2 className="section-title reveal">Engineering Journey</h2>
+      <h2 className="section-title">Engineering Journey</h2>
 
-      <div className="timeline">
-        <div className="timeline-item glass-card reveal">
+      <motion.div
+        className="timeline"
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-100px" }}
+      >
+        <motion.div className="timeline-item glass-card" variants={item}>
           <span className="timeline-year">2022</span>
           <h3>Started Coding</h3>
-          <p>
-            Built a strong foundation in programming and problem-solving.
-          </p>
-        </div>
+          <p>Built a strong foundation in programming and problem-solving.</p>
+        </motion.div>
 
-        <div className="timeline-item glass-card reveal">
+        <motion.div className="timeline-item glass-card" variants={item}>
           <span className="timeline-year">2023</span>
           <h3>Full Stack Development</h3>
           <p>
-            Learned MERN stack and built full-stack applications with real-world use cases.
+            Learned MERN stack and built full-stack applications with real-world
+            use cases.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="timeline-item glass-card reveal">
+        <motion.div className="timeline-item glass-card" variants={item}>
           <span className="timeline-year">2024</span>
           <h3>Cybersecurity Focus</h3>
           <p>
-            Explored steganography, encryption concepts, and secure data communication.
+            Explored steganography, encryption concepts, and secure data
+            communication.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="timeline-item glass-card reveal">
+        <motion.div className="timeline-item glass-card" variants={item}>
           <span className="timeline-year">2025</span>
           <h3>Placement Ready</h3>
           <p>
-            Focused on building scalable, secure, and well-engineered applications.
+            Focused on building scalable, secure, and well-engineered
+            applications.
           </p>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
