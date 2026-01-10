@@ -11,8 +11,6 @@ export default function SkillNode({
   skill,
   hoveredSkill,
   setHoveredSkill,
-  selectedSkill,
-  setSelectedSkill,
   networkActivated
 }) {
 
@@ -20,18 +18,13 @@ export default function SkillNode({
   const isCenter = skill.type === "center";
 
   const isRelated =
-    hoveredSkill?.links?.includes(skill.id) ||
-    selectedSkill?.links?.includes(skill.id);
+    hoveredSkill?.links?.includes(skill.id);
 
   const isActive =
-    hoveredSkill?.id === skill.id ||
-    selectedSkill?.id === skill.id ||
-    isRelated;
+    hoveredSkill?.id === skill.id || isRelated;
 
   const isDimmed =
-    (hoveredSkill || selectedSkill) && !isActive;
-
-  const isExpanded = selectedSkill?.id === skill.id;
+    hoveredSkill && !isActive;
 
   return (
     <>
@@ -40,7 +33,6 @@ export default function SkillNode({
             data-id={skill.id}
             onMouseEnter={() => !isCenter && setHoveredSkill(skill)}
             onMouseLeave={() => !isCenter && setHoveredSkill(null)}
-            onClick={() => !isCenter && setSelectedSkill(skill)}
             animate={
                 isCenter || networkActivated
                 ? { x: 0, y: 0 }
@@ -62,21 +54,6 @@ export default function SkillNode({
         >
             {skill.label}
         </motion.div>
-
-      {isExpanded && skill.examples && (
-        <motion.div
-          className="skill-details"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0 }}
-        >
-          <ul>
-            {skill.examples.map((ex, i) => (
-              <li key={i}>▸ {ex}</li>
-            ))}
-          </ul>
-        </motion.div>
-      )}
     </>
   );
 }

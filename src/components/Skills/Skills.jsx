@@ -9,7 +9,6 @@ export default function Skills() {
   const containerRef = useRef(null);
 
   const [hoveredSkill, setHoveredSkill] = useState(null);
-  const [selectedSkill, setSelectedSkill] = useState(null);
   const [networkActivated, setNetworkActivated] = useState(false);
 
   return (
@@ -25,7 +24,6 @@ export default function Skills() {
           containerRef={containerRef}
           skills={skills}
           hoveredSkill={hoveredSkill}
-          selectedSkill={selectedSkill}
           networkActivated={networkActivated}
         />
 
@@ -44,8 +42,6 @@ export default function Skills() {
               skill={skill}
               hoveredSkill={hoveredSkill}
               setHoveredSkill={setHoveredSkill}
-              selectedSkill={selectedSkill}
-              setSelectedSkill={setSelectedSkill}
               networkActivated={networkActivated}
             />
           ))
