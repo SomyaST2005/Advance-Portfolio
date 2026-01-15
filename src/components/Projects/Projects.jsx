@@ -34,9 +34,18 @@ const projectsData = [
 
 export default function Projects() {
   const [activeProject, setActiveProject] = useState(null);
+  const [closing, setClosing] = useState(false);
 
   const sectionRef = useRef(null);
   const [booted, setBooted] = useState(false);
+
+  const closeModal = () => {
+    setClosing(true);
+    setTimeout(() => {
+      setActiveProject(null);
+      setClosing(false);
+    }, 300); // must match CSS animation duration
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -100,11 +109,17 @@ export default function Projects() {
       </div>
 
       {activeProject && (
-        <div className="project-overlay">
-          <div className="project-modal glass-card">
+        <div 
+          className={`project-overlay ${closing ? "closing" : ""}`}
+          onClick={closeModal}
+        >
+          <div 
+            className={`project-modal glass-card ${closing ? "closing" : ""}`}
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
               className="close-btn"
-              onClick={() => setActiveProject(null)}
+              onClick={closeModal}
             >
               ✕
             </button>
@@ -132,7 +147,7 @@ export default function Projects() {
             </div>
 
             <div className="mission-footer">
-              
+
               <a
                 href={activeProject.details.link}
                 target="_blank"

@@ -85,12 +85,25 @@
   inset: 0;
   background: rgba(5, 7, 13, 0.75);
   backdrop-filter: blur(10px);
-
+  animation: overlayIn 0.3s ease forwards;
   display: flex;
   justify-content: center;
   align-items: center;
-
   z-index: 10;
+}
+
+.project-overlay.closing {
+  animation: overlayOut 0.3s ease forwards;
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes overlayOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 
 /* Modal sticks relative to viewport scroll */
@@ -103,7 +116,22 @@
     0 0 40px rgba(0,229,255,0.15),
     inset 0 0 30px rgba(0,229,255,0.04);
   padding: 24px 28px;
-  animation: modalIn 0.4s ease-out;
+  animation: modalIn 0.4s ease-out forwards;
+}
+
+.project-modal.closing {
+  animation: modalOut 0.4s ease-in forwards;
+}
+
+@keyframes modalOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
 }
 
 .project-modal * {
