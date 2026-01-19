@@ -3,7 +3,7 @@ import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
 import Skills from './components/Skills/Skills';
 import Projects from './components/Projects/Projects';
-import Security from './components/Security/Security';
+import Cybersecurity from './components/Security/Cybersecurity.jsx';
 import About from './components/About/About';
 import Contact from './components/Contact/Contact';
 import useReveal from './useReveal';
@@ -112,7 +112,7 @@ function App() {
         <About />
         <Skills />
         <Projects />
-        <Security />
+        <Cybersecurity />
         <Contact />
       </div>
     </>
