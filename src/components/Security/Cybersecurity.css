@@ -10,11 +10,19 @@
   height: 300px;
 }
 
+.threat-visual {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .node {
   fill: #081c24;
   stroke: #4dd0e1;
   stroke-width: 2;
-  transition: all 0.4s ease;
+  transition: opacity 0.4s ease, stroke 0.4s ease, filter 0.4s ease;
   opacity: 0.5;
 }
 
@@ -22,6 +30,7 @@
   opacity: 1;
   stroke: #00e5ff;
   filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.8));
+  transition-delay: 0.15s;
 }
 
 .path {
@@ -80,7 +89,14 @@
 }
 
 .layer-info {
-  margin-top: 16px;
+  position: absolute;
+  top: -18px;
+  max-width: 420px;
+  z-index: 3;
+  pointer-events: none;
+  margin-bottom: 14px;
+  max-width: 420px;
+  text-align: center;
   padding: 14px 18px;
   font-size: 0.85rem;
   line-height: 1.6;
@@ -94,6 +110,10 @@
   letter-spacing: 0.6px;
 }
 
+.layer-info p {
+  opacity: 0.85;
+}
+
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -103,4 +123,20 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Phase-specific highlights */
+.node.active.attack {
+  stroke: #ff4d4d;
+  filter: drop-shadow(0 0 12px rgba(255, 77, 77, 0.85));
+}
+
+.node.active.detecting {
+  stroke: #4dd0e1;
+  filter: drop-shadow(0 0 12px rgba(77, 208, 225, 0.85));
+}
+
+.node.active.mitigated {
+  stroke: #7cffc4;
+  filter: drop-shadow(0 0 14px rgba(124, 255, 196, 0.95));
 }
