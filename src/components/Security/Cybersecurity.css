@@ -14,6 +14,14 @@
   fill: #081c24;
   stroke: #4dd0e1;
   stroke-width: 2;
+  transition: all 0.4s ease;
+  opacity: 0.5;
+}
+
+.node.active {
+  opacity: 1;
+  stroke: #00e5ff;
+  filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.8));
 }
 
 .path {
@@ -49,3 +57,25 @@
 .run-sim-btn:hover {
   background: rgba(0,229,255,0.12);
 }
+
+.node-label {
+  margin-top: 8px;
+  font-size: 0.7rem;
+  letter-spacing: 0.6px;
+  opacity: 0.65;
+  text-align: center;
+}
+
+.system-log li {
+  opacity: 0.35;
+  transition: opacity 0.4s ease;
+}
+
+.system-log li.active {
+  opacity: 1;
+}
+
+.system-log li.success {
+  color: #7cffc4;
+}
+

@@ -3,7 +3,10 @@ import { useEffect, useState } from "react";
 
 export default function ThreatSimulation({ active }) {
   const [phase, setPhase] = useState("idle");
-  const isIdle = phase === "idle";  
+  const isIdle = phase === "idle";
+  const isAttack = phase === "attack";
+  const isDetecting = phase === "detecting";
+  const isMitigated = phase === "mitigated";
 
   useEffect(() => {
     if (!active) return;
@@ -21,13 +24,27 @@ export default function ThreatSimulation({ active }) {
   return (
     <svg className="threat-svg" viewBox="0 0 600 300">
       {/* Nodes */}
-      <circle cx="100" cy="150" r="22" className="node protocol" />
-      <circle cx="260" cy="150" r="22" className="node encryption" />
-      <circle cx="420" cy="150" r="22" className="node steg" />
+      <circle
+        cx="100"
+        cy="150"
+        r="22"
+        className={`node protocol ${isAttack ? "active" : ""}`}
+      />
 
-      <text x="100" y="185">Protocols</text>
-      <text x="260" y="185">Encryption</text>
-      <text x="420" y="185">Steganography</text>
+        <circle
+        cx="260"
+        cy="150"
+        r="22"
+        className={`node encryption ${isDetecting ? "active" : ""}`}
+      />
+
+        <circle
+        cx="420"
+        cy="150"
+        r="22"
+        className={`node steg ${isMitigated ? "active" : ""}`}
+      />
+
 
       {/* Static path */}
       <line x1="122" y1="150" x2="238" y2="150" className="path" />
