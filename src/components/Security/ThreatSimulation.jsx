@@ -1,131 +1,143 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const LAYER_INFO = {
-  protocol: {
-    title: "Protocol Layer",
-    description:
-      "Network protocols define how data travels. Attacks often begin by exploiting weak or unvalidated protocol communication."
-  },
-  encryption: {
-    title: "Encryption Layer",
-    description:
-      "Encryption ensures intercepted data is unreadable. Even if traffic is captured, content remains protected."
-  },
-  steg: {
-    title: "Steganography Layer",
-    description:
-      "Steganography hides encrypted data inside innocent-looking media, making detection extremely difficult."
-  }
-};
+export default function ThreatSimulation({
+  phase,
+  onTamperingDetected
+}) {
+  const POS = {
+    sender: 80,
+    security: 350,
+    receiver: 620,
+    attackerY: 80
+  };
 
-export default function ThreatSimulation({ phase }) {
-  const [selectedLayer, setSelectedLayer] = useState(null);
+  // local animation control
+  const [packetAtSecurity, setPacketAtSecurity] = useState(false);
+  const [tampering, setTampering] = useState(false);
 
-  const isIdle = phase === "idle";
-  const isAttack = phase === "attack";
-  const isDetecting = phase === "detecting";
-  const isMitigated = phase === "mitigated";
+  // reset when phase changes
+  useEffect(() => {
+    setPacketAtSecurity(false);
+    setTampering(false);
+  }, [phase]);
 
   return (
-    <div className="threat-visual">
-      {/* Layer description */}
-      {selectedLayer && (
-        <div className="layer-info glass-card">
-          <h4>{LAYER_INFO[selectedLayer].title}</h4>
-          <p>{LAYER_INFO[selectedLayer].description}</p>
-        </div>
+    <svg className="threat-svg" viewBox="0 0 700 300">
+
+      {/* Labels */}
+      <text x="80" y="110" className="node-label">Sender</text>
+      <text x="350" y="110" className="node-label">Security</text>
+      <text x="620" y="110" className="node-label">Receiver</text>
+
+      {/* Nodes */}
+      <circle cx={POS.sender} cy="150" r="22" className="node" />
+      <circle cx={POS.security} cy="150" r="30" className="node" />
+      <circle cx={POS.receiver} cy="150" r="22" className="node" />
+
+      {/* Paths */}
+      <line x1="102" y1="150" x2="320" y2="150" className="path" />
+      <line x1="380" y1="150" x2="598" y2="150" className="path" />
+
+      {/* ================= PART 1 ================= */}
+      {phase === "NORMAL" && (
+        <motion.circle
+          r="4"
+          fill="#7cffc4"
+          initial={{ cx: POS.sender, cy: 150, opacity: 0 }}
+          animate={{
+            cx: [POS.sender, POS.receiver],
+            opacity: [0, 1, 1, 0]
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            repeatDelay: 1,
+            ease: "linear"
+          }}
+        />
       )}
 
-      <svg className="threat-svg" viewBox="0 0 600 300">
-        {/* Protocol */}
-        <circle
-          cx="100"
-          cy="150"
-          r="22"
-          className={`node protocol ${isAttack ? "active attack" : ""}`}
-          onClick={() => setSelectedLayer("protocol")}
-          style={{ cursor: "pointer" }}
-        />
+      {/* ================= PART 2 ================= */}
+      {phase === "TAMPERING" && (
+        <>
+          {/* Packet travels sender → security */}
+          {!packetAtSecurity && (
+            <motion.circle
+              r="4"
+              fill="#7cffc4"
+              initial={{ cx: POS.sender, cy: 150, opacity: 1 }}
+              animate={{ cx: POS.security - 40, opacity: 1 }}
+              transition={{ duration: 3, ease: "linear" }}
+              onAnimationComplete={() => setPacketAtSecurity(true)}
+            />
+          )}
 
-        {/* Encryption */}
-        <circle
-          cx="260"
-          cy="150"
-          r="22"
-          className={`node encryption ${isDetecting ? "active detecting" : ""}`}
-          onClick={() => setSelectedLayer("encryption")}
-          style={{ cursor: "pointer" }}
-        />
+          {/* Packet stopped at security */}
+          {packetAtSecurity && (
+            <>
+            
+              <motion.circle
+                cx={POS.security}
+                cy={POS.attackerY}
+                r="18"
+                className="node attacker"
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              />
 
-        {/* Steganography */}
-        <circle
-          cx="420"
-          cy="150"
-          r="22"
-          className={`node steg ${isMitigated ? "active mitigated" : ""}`}
-          onClick={() => setSelectedLayer("steg")}
-          style={{ cursor: "pointer" }}
-        />
+              <text
+                x={POS.security}
+                y={POS.attackerY - 25}
+                className="node-label attacker-label"
+                textAnchor="middle"
+              >
+                Attacker
+              </text>
 
-        {/* Paths */}
-        <line x1="122" y1="150" x2="238" y2="150" className="path" />
-        <line x1="282" y1="150" x2="398" y2="150" className="path" />
+              {/* Connection line eases in */}
+              <motion.line
+                x1={POS.security}
+                y1={POS.attackerY}
+                x2={POS.security - 40}
+                y2={150}
+                stroke="#ff4d4d"
+                strokeWidth="1.5"
+                strokeDasharray="4 4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+              />
 
-        {/* Attack pulse */}
-        {isAttack && (
-          <motion.circle
-            r="6"
-            fill="#ff4d4d"
-            animate={{
-              cx: [100, 260, 420],
-              cy: [150, 150, 150]
-            }}
-            transition={{
-              duration: 3.6,
-              times: [0, 0.5, 1],
-              ease: "easeInOut"
-            }}
-          />
-        )}
-
-        {/* Detection scan */}
-        {isDetecting && (
-          <motion.circle
-            cx="260"
-            cy="150"
-            r="60"
-            fill="none"
-            stroke="#4dd0e1"
-            strokeWidth="2"
-            initial={{ opacity: 0, scale: 0.6 }}
-            animate={{ opacity: [0.6, 0], scale: 1.4 }}
-            transition={{ duration: 1.5 }}
-          />
-        )}
-
-        {/* Mitigated */}
-        {isMitigated && (
-          <text
-            x="260"
-            y="220"
-            textAnchor="middle"
-            className="secure-text"
-          >
-            Threat Neutralized
-          </text>
-        )}
-
-        {/* Idle scan */}
-        {isIdle && (
-          <motion.circle
-            r="4"
-            fill="rgba(77, 208, 225, 0.35)"
-            animate={{ cx: [100, 420], cy: [150, 150] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-          />
-        )}
-      </svg>
-    </div>
+              {/* Tampering jitter */}
+              <motion.circle
+                r="4"
+                fill="#7cffc4"
+                cx={POS.security - 40}
+                cy={150}
+                animate={
+                  !tampering
+                    ? { y: [0, -3, 3, -3, 3, -2, 2, 0] }
+                    : { y: 0 }
+                }
+                transition={{
+                  delay: !tampering ? 0.8 : 0,
+                  duration: !tampering ? 0.6 : 0,
+                  repeat: !tampering ? 3 : 0,
+                  ease: "linear"
+                }}
+                onAnimationComplete={() => {
+                  if (!tampering) {
+                    setTampering(true);
+                    onTamperingDetected();
+                  }
+                }}
+              />
+            </>
+          )}
+        </>
+      )}
+    </svg>
   );
 }
