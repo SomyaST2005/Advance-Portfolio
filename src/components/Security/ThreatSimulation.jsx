@@ -5,7 +5,9 @@ export default function ThreatSimulation({
   phase,
   onTamperingDetected,
   onSuspiciousPacket,
-  onMaliciousBlocked
+  onMaliciousBlocked,
+  onDataSecured,
+  onDataProtected
 }) {
   const POS = {
     sender: 80,
@@ -20,6 +22,8 @@ export default function ThreatSimulation({
   const [packetInsideSecurity, setPacketInsideSecurity] = useState(false);
   const [attackPacketSent, setAttackPacketSent] = useState(false);
   const [attackPacketArrived, setAttackPacketArrived] = useState(false);
+  const [secureStepDone, setSecureStepDone] = useState(false);
+  const [protectStepDone, setProtectStepDone] = useState(false);
 
   // reset when phase changes
   useEffect(() => {
@@ -28,6 +32,8 @@ export default function ThreatSimulation({
     setPacketInsideSecurity(false);
     setAttackPacketSent(false);
     setAttackPacketArrived(false);
+    setSecureStepDone(false);
+    setProtectStepDone(false);
   }, [phase]);
 
   return (
@@ -242,6 +248,43 @@ export default function ThreatSimulation({
               onAnimationComplete={onMaliciousBlocked}
             />
           )}
+          {/* === DATA SECURED === */}
+          {attackPacketArrived && !secureStepDone && (
+            <motion.circle
+              cx={POS.security}
+              cy={150}
+              r="30"
+              fill="none"
+              stroke="#4dd0e1"
+              strokeWidth="2"
+              initial={{ opacity: 0.6, scale: 1 }}
+              animate={{ opacity: 0, scale: 1.8 }}
+              transition={{ duration: 0.9, ease: "easeOut" }}
+              onAnimationComplete={() => {
+                setSecureStepDone(true);
+                onDataSecured();
+              }}
+            />
+          )}
+          {/* === DATA PROTECTED === */}
+          {secureStepDone && !protectStepDone && (
+            <motion.circle
+              cx={POS.security}
+              cy={150}
+              r="30"
+              fill="none"
+              stroke="#7cffc4"
+              strokeWidth="2"
+              initial={{ opacity: 0.5, scale: 1 }}
+              animate={{ opacity: 0, scale: 2.1 }}
+              transition={{ duration: 1.1, ease: "easeOut" }}
+              onAnimationComplete={() => {
+                setProtectStepDone(true);
+                onDataProtected();
+              }}
+            />
+          )}
+
         </>
       )}
 

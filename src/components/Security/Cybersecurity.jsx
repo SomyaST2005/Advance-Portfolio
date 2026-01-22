@@ -18,6 +18,14 @@ export default function Cybersecurity() {
     setEvents(prev => [...prev, "❌ Malicious packet blocked"]);
   };
 
+  const handleDataSecured = () => {
+    setEvents(prev => [...prev, "🔐 Data secured"]);
+  };
+
+  const handleDataProtected = () => {
+    setEvents(prev => [...prev, "🛡 Data protected"]);
+  };
+
   // Initialize Part 1 when section mounts
   useEffect(() => {
     setPhase("NORMAL");
@@ -48,6 +56,8 @@ export default function Cybersecurity() {
           onTamperingDetected={handleTamperingDetected}
           onSuspiciousPacket={handleSuspiciousPacket}
           onMaliciousBlocked={handleMaliciousBlocked}
+          onDataSecured={handleDataSecured}
+          onDataProtected={handleDataProtected}
         />
 
         <ThreatLog events={events} />
