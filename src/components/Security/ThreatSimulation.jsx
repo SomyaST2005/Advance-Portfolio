@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 
 export default function ThreatSimulation({
   phase,
-  onTamperingDetected
+  onTamperingDetected,
+  onSuspiciousPacket,
+  onMaliciousBlocked
 }) {
   const POS = {
     sender: 80,
@@ -15,11 +17,17 @@ export default function ThreatSimulation({
   // local animation control
   const [packetAtSecurity, setPacketAtSecurity] = useState(false);
   const [tampering, setTampering] = useState(false);
+  const [packetInsideSecurity, setPacketInsideSecurity] = useState(false);
+  const [attackPacketSent, setAttackPacketSent] = useState(false);
+  const [attackPacketArrived, setAttackPacketArrived] = useState(false);
 
   // reset when phase changes
   useEffect(() => {
     setPacketAtSecurity(false);
     setTampering(false);
+    setPacketInsideSecurity(false);
+    setAttackPacketSent(false);
+    setAttackPacketArrived(false);
   }, [phase]);
 
   return (
@@ -32,7 +40,12 @@ export default function ThreatSimulation({
 
       {/* Nodes */}
       <circle cx={POS.sender} cy="150" r="22" className="node" />
-      <circle cx={POS.security} cy="150" r="30" className="node" />
+      <circle
+        cx={POS.security}
+        cy="150"
+        r="30"
+        className={`node ${phase === "ATTACK_PACKET" ? "security-warning" : ""}`}
+      />
       <circle cx={POS.receiver} cy="150" r="22" className="node" />
 
       {/* Paths */}
@@ -138,6 +151,100 @@ export default function ThreatSimulation({
           )}
         </>
       )}
+
+      {/* ================= PART 3 ================= */}
+      {phase === "ATTACK_PACKET" && (
+        <>
+
+          <motion.circle
+            cx={POS.security}
+            cy={POS.attackerY}
+            r="18"
+            className="node attacker"
+          />
+
+          <text
+            x={POS.security}
+            y={POS.attackerY - 25}
+            className="node-label attacker-label"
+            textAnchor="middle"
+          >
+            Attacker
+          </text>
+
+
+          {/* Legit packet enters security */}
+          {!packetInsideSecurity && (
+            <motion.circle
+              r="4"
+              fill="#7cffc4"
+              cx={POS.security - 40}
+              cy={150}
+              animate={{ cx: POS.security }}
+              transition={{ duration: 1.2, ease: "easeInOut" }}
+              onAnimationComplete={() => setPacketInsideSecurity(true)}
+            />
+          )}
+
+          {/* Packet stays inside security */}
+          {packetInsideSecurity && (
+            <circle
+              r="4"
+              fill="#7cffc4"
+              cx={POS.security}
+              cy={150}
+            />
+          )}
+
+          {/* Attacker → security connection */}
+          <motion.line
+            x1={POS.security}
+            y1={POS.attackerY}
+            x2={POS.security}
+            y2={150}
+            stroke="#ff4d4d"
+            strokeWidth="1.5"
+            strokeDasharray="4 4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          />
+
+          {/* Malicious packet travels attacker → security */}
+          {!attackPacketArrived && (
+            <motion.circle
+              r="6"
+              fill="#ff4d4d"
+              initial={{ cx: POS.security, cy: POS.attackerY }}
+              animate={{ cx: POS.security, cy: 150 }}
+              transition={{ duration: 1.2, ease: "easeInOut" }}
+              onAnimationComplete={() => {
+                setAttackPacketArrived(true);
+                onSuspiciousPacket();
+              }}
+            />
+          )}
+
+          {/* Malicious packet DROPPED */}
+          {attackPacketArrived && (
+            <motion.circle
+              r="6"
+              fill="#ff4d4d"
+              cx={POS.security}
+              cy={150}
+              initial={{ opacity: 1, scale: 1 }}
+              animate={{
+                opacity: 0,
+                scale: 0,
+                y: 40   // ⬇ drop downward
+              }}
+              transition={{ duration: 0.6, ease: "easeIn" }}
+              onAnimationComplete={onMaliciousBlocked}
+            />
+          )}
+        </>
+      )}
+
     </svg>
   );
 }

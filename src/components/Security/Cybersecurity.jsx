@@ -10,6 +10,14 @@ export default function Cybersecurity() {
   const [phase, setPhase] = useState("NORMAL");
   const [events, setEvents] = useState([]);
 
+  const handleSuspiciousPacket = () => {
+    setEvents(prev => [...prev, "⚠ Suspicious packet detected"]);
+  };
+
+  const handleMaliciousBlocked = () => {
+    setEvents(prev => [...prev, "❌ Malicious packet blocked"]);
+  };
+
   // Initialize Part 1 when section mounts
   useEffect(() => {
     setPhase("NORMAL");
@@ -25,6 +33,9 @@ export default function Cybersecurity() {
   // 🔑 visual → log sync
   const handleTamperingDetected = () => {
     setEvents(prev => [...prev, "Data tampering attempt detected"]);
+    setTimeout(() => {
+      setPhase("ATTACK_PACKET");
+    }, 800);
   };
 
   return (
@@ -35,6 +46,8 @@ export default function Cybersecurity() {
         <ThreatSimulation
           phase={phase}
           onTamperingDetected={handleTamperingDetected}
+          onSuspiciousPacket={handleSuspiciousPacket}
+          onMaliciousBlocked={handleMaliciousBlocked}
         />
 
         <ThreatLog events={events} />
