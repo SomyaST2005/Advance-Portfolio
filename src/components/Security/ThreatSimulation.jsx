@@ -50,7 +50,11 @@ export default function ThreatSimulation({
         cx={POS.security}
         cy="150"
         r="30"
-        className={`node ${phase === "ATTACK_PACKET" ? "security-warning" : ""}`}
+        className={`node
+          ${phase === "ATTACK_PACKET" && !secureStepDone ? "security-warning" : ""}
+          ${secureStepDone && !protectStepDone ? "security-secured" : ""}
+          ${protectStepDone ? "security-protected" : ""}
+        `}
       />
       <circle cx={POS.receiver} cy="150" r="22" className="node" />
 
