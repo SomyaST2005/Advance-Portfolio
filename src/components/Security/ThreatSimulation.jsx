@@ -7,7 +7,8 @@ export default function ThreatSimulation({
   onSuspiciousPacket,
   onMaliciousBlocked,
   onDataSecured,
-  onDataProtected
+  onDataProtected,
+  onDataReceived
 }) {
   const POS = {
     sender: 80,
@@ -24,6 +25,8 @@ export default function ThreatSimulation({
   const [attackPacketArrived, setAttackPacketArrived] = useState(false);
   const [secureStepDone, setSecureStepDone] = useState(false);
   const [protectStepDone, setProtectStepDone] = useState(false);
+  const [packetDelivered, setPacketDelivered] = useState(false);
+  const [receiverAccepted, setReceiverAccepted] = useState(false);
 
   // reset when phase changes
   useEffect(() => {
@@ -34,6 +37,8 @@ export default function ThreatSimulation({
     setAttackPacketArrived(false);
     setSecureStepDone(false);
     setProtectStepDone(false);
+    setPacketDelivered(false);
+    setReceiverAccepted(false);
   }, [phase]);
 
   return (
@@ -289,6 +294,48 @@ export default function ThreatSimulation({
             />
           )}
 
+        </>
+      )}
+
+      {/* ================= PART 4 – STEP 4.1 ================= */}
+      {phase === "DELIVERING" && (
+        <>
+          {/* Legit packet travels Security → Receiver */}
+          {!packetDelivered && (
+            <motion.circle
+              r="4"
+              fill="#7cffc4"
+              cx={POS.security}
+              cy={150}
+              animate={{
+                cx: POS.receiver,
+                opacity: [1, 1, 0] // fade out ONLY at end
+              }}
+              transition={{
+                duration: 2.4,
+                ease: "easeInOut"
+              }}
+              onAnimationComplete={() => {
+                setPacketDelivered(true);
+                setTimeout(() => setReceiverAccepted(true), 300);
+              }}
+            />
+          )}
+
+          {receiverAccepted && (
+            <motion.circle
+              cx={POS.receiver}
+              cy={150}
+              r="22"
+              fill="none"
+              stroke="#7cffc4"
+              strokeWidth="2"
+              initial={{ opacity: 0.6, scale: 1 }}
+              animate={{ opacity: 0, scale: 1.8 }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+              onAnimationComplete={onDataReceived}
+            />
+          )}
         </>
       )}
 

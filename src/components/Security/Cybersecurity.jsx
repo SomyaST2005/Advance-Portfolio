@@ -26,6 +26,14 @@ export default function Cybersecurity() {
     setEvents(prev => [...prev, "🛡 Data protected"]);
   };
 
+  const handleDataReceived = () => {
+    setEvents(prev => [...prev, "✅ Data received safely"]);
+    setTimeout(() => {
+      setPhase("NORMAL");
+      setEvents(prev => [...prev, "Continuously monitoring network"]);
+    }, 800);
+  };
+
   // Initialize Part 1 when section mounts
   useEffect(() => {
     setPhase("NORMAL");
@@ -57,7 +65,11 @@ export default function Cybersecurity() {
           onSuspiciousPacket={handleSuspiciousPacket}
           onMaliciousBlocked={handleMaliciousBlocked}
           onDataSecured={handleDataSecured}
-          onDataProtected={handleDataProtected}
+          onDataProtected={() => {
+            handleDataProtected();
+            setTimeout(() => setPhase("DELIVERING"), 600);
+          }}
+          onDataReceived={handleDataReceived}
         />
 
         <ThreatLog events={events} />

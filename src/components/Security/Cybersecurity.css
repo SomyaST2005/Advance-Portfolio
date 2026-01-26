@@ -170,3 +170,12 @@
     drop-shadow(0 0 14px rgba(124, 255, 196, 0.8))
     drop-shadow(0 0 24px rgba(124, 255, 196, 0.6));
 }
+
+/* ✅ Receiver accepted packet */
+.receiver-accepted {
+  stroke: #7cffc4;
+  opacity: 1;
+  filter:
+    drop-shadow(0 0 6px rgba(124, 255, 196, 0.6))
+    drop-shadow(0 0 14px rgba(124, 255, 196, 0.85));
+}
