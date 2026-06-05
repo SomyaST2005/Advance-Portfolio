@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./Skills.css";
 import { skills } from "./skillsData";
 import SkillNode from "./SkillNode";
@@ -7,13 +7,35 @@ import CenterNode from "./CenterNode";
 
 export default function Skills() {
   const containerRef = useRef(null);
+  const sectionRef = useRef(null);
 
   const [hoveredSkill, setHoveredSkill] = useState(null);
   const [networkActivated, setNetworkActivated] = useState(false);
 
+  // Auto-activate the network when the section scrolls into view
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !networkActivated) {
+          setNetworkActivated(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [networkActivated]);
+
   return (
-    <section className="skills" id="skills">
+    <section ref={sectionRef} className="skills" id="skills">
       <h2 className="section-title">Skill Network</h2>
+      <p className="section-subtitle">
+        An interconnected map of technologies and expertise
+      </p>
 
       <div
         ref={containerRef}
@@ -40,6 +62,7 @@ export default function Skills() {
             <SkillNode
               key={skill.id}
               skill={skill}
+              skills={skills}
               hoveredSkill={hoveredSkill}
               setHoveredSkill={setHoveredSkill}
               networkActivated={networkActivated}

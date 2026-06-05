@@ -7,8 +7,19 @@ const randomFloat = () => ({
         duration: 6 + Math.random() * 4 // 6–10s
 }); 
 
+const CENTER = { x: 50, y: 50 };
+
+function polarToXY(angle, radius) {
+  const rad = (angle * Math.PI) / 180;
+  return {
+    x: CENTER.x + Math.cos(rad) * radius,
+    y: CENTER.y + Math.sin(rad) * radius
+  };
+}
+
 export default function SkillNode({
   skill,
+  skills,
   hoveredSkill,
   setHoveredSkill,
   networkActivated
@@ -25,6 +36,26 @@ export default function SkillNode({
 
   const isDimmed =
     hoveredSkill && !isActive;
+
+  let position = CENTER;
+
+  if (skill.type === "core") {
+    position = polarToXY(skill.angle, skill.radius);
+  }
+
+  if (skill.parent && skills) {
+    const parent = skills.find(s => s.id === skill.parent);
+    if (parent) {
+      const base = polarToXY(parent.angle, parent.radius);
+      const dynamicRadius = 20 + Math.abs(skill.offset) * 0.15;
+      const spread = polarToXY(parent.angle + skill.offset, dynamicRadius);
+
+      position = {
+        x: base.x + (spread.x - CENTER.x),
+        y: base.y + (spread.y - CENTER.y)
+      };
+    }
+  }
 
   return (
     <>
@@ -50,6 +81,11 @@ export default function SkillNode({
                     ease: "easeInOut",
                     }
             }
+            style={{
+                    left: `${position.x}%`,
+                    top: `${position.y}%`,
+                    transform: "translate(-50%, -50%)"
+                  }}
             whileHover={!isCenter ? { scale: 1.12 } : {}}
         >
             {skill.label}

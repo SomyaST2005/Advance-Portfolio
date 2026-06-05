@@ -5,6 +5,7 @@ import "./Cybersecurity.css";
 
 export default function Cybersecurity() {
   const ref = useRef(null);
+  const hasAutoRun = useRef(false);
 
   // STORY STATE (single source of truth)
   const [phase, setPhase] = useState("NORMAL");
@@ -46,6 +47,29 @@ export default function Cybersecurity() {
     setPhase("TAMPERING");
   };
 
+  // Auto-start the simulation when section scrolls into view (once)
+  useEffect(() => {
+    const section = ref.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAutoRun.current) {
+          hasAutoRun.current = true;
+          // Small delay so user can see the section before it starts
+          setTimeout(() => {
+            setEvents(["Continuously monitoring network"]);
+            setPhase("TAMPERING");
+          }, 600);
+        }
+      },
+      { threshold: 0.35 }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
   // 🔑 visual → log sync
   const handleTamperingDetected = () => {
     setEvents(prev => [...prev, "Data tampering attempt detected"]);
@@ -57,6 +81,9 @@ export default function Cybersecurity() {
   return (
     <section ref={ref} className="cybersecurity" id="security">
       <h2 className="section-title">Threat Simulation</h2>
+      <p className="section-subtitle">
+        Watch a real-time network defense scenario unfold
+      </p>
 
       <div className="security-lab">
         <ThreatSimulation
@@ -75,7 +102,7 @@ export default function Cybersecurity() {
         <ThreatLog events={events} />
       </div>
 
-      <button className="run-sim-btn" onClick={runSimulation}>
+      <button className="neon-btn run-sim-btn" onClick={runSimulation}>
         Run Simulation
       </button>
     </section>

@@ -1,61 +1,71 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import "./Intro.css";
 
 function Intro({ onFinish }) {
-    useEffect(() => {
-        // ✅ FORCE START AT TOP ON RELOAD
-        window.scrollTo(0, 0);
+  const dismiss = useCallback(() => {
+    onFinish();
+  }, [onFinish]);
 
-        const scrollY = 0; // always lock at top
+  useEffect(() => {
+    // Force start at top
+    window.scrollTo(0, 0);
 
-        // ===== CSS LOCK =====
-        document.documentElement.style.overflow = "hidden";
-        document.body.style.overflow = "hidden";
-        document.body.style.position = "fixed";
-        document.body.style.top = "0px";
-        document.body.style.width = "100%";
+    // Lock scrolling
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = "0px";
+    document.body.style.width = "100%";
 
-        // ===== EVENT-LEVEL LOCK =====
-        const preventScroll = (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        };
+    // Prevent scroll events
+    const preventScroll = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    };
 
-        window.addEventListener("wheel", preventScroll, { passive: false });
-        window.addEventListener("touchmove", preventScroll, { passive: false });
-        window.addEventListener("keydown", preventScroll, { passive: false });
+    window.addEventListener("wheel", preventScroll, { passive: false });
+    window.addEventListener("touchmove", preventScroll, { passive: false });
 
-        const timer = setTimeout(() => {
-            onFinish();
-        }, 3200);
+    // Auto-dismiss after animation
+    const timer = setTimeout(() => {
+      dismiss();
+    }, 3200);
 
-        return () => {
-            window.removeEventListener("wheel", preventScroll);
-            window.removeEventListener("touchmove", preventScroll);
-            window.removeEventListener("keydown", preventScroll);
+    // Skip on click or keypress
+    const handleSkip = () => dismiss();
+    window.addEventListener("click", handleSkip);
+    window.addEventListener("keydown", handleSkip);
 
-            document.documentElement.style.overflow = "";
-            document.body.style.overflow = "";
-            document.body.style.position = "";
-            document.body.style.top = "";
-            document.body.style.width = "";
+    return () => {
+      window.removeEventListener("wheel", preventScroll);
+      window.removeEventListener("touchmove", preventScroll);
+      window.removeEventListener("click", handleSkip);
+      window.removeEventListener("keydown", handleSkip);
 
-            // ✅ ENSURE WE STAY AT TOP
-            window.scrollTo(0, 0);
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
 
-            clearTimeout(timer);
-        };
-    }, [onFinish]);
+      window.scrollTo(0, 0);
+      clearTimeout(timer);
+    };
+  }, [dismiss]);
 
   return (
     <div className="intro">
       <div className="intro-terminal">
-        <p className="line l1">&gt; booting developer_profile</p>
-        <p className="line l2">✓ loading modules</p>
-        <p className="line l3">✓ initializing security layer</p>
-        <p className="line l4">✓ mounting interface</p>
+        <p className="line l1"><span className="prompt">&gt;</span> booting developer_profile</p>
+        <p className="line l2"><span className="check">✓</span> loading modules</p>
+        <p className="line l3"><span className="check">✓</span> initializing security layer</p>
+        <p className="line l4"><span className="check">✓</span> mounting interface</p>
         <p className="line l5 access">ACCESS GRANTED</p>
+      </div>
+
+      <div className="intro-skip">
+        click anywhere or press any key to skip
       </div>
     </div>
   );

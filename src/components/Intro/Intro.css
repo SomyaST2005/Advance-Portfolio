@@ -1,69 +1,89 @@
+/* src/components/Intro/Intro.css */
 .intro {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at center, #0a0e19, #05070d);
+  z-index: 9999;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
-  overscroll-behavior: none;
-  touch-action: none;
+  background: radial-gradient(ellipse at center, #0a0e1a 0%, #05070d 100%);
   animation: introOut 3.2s ease forwards;
 }
 
+@keyframes introOut {
+  0%, 85% { opacity: 1; }
+  100% { opacity: 0; pointer-events: none; }
+}
+
 .intro-terminal {
-  font-family: monospace;
-  font-size: 0.95rem;
-  color: #9efcff;
-  text-align: left;
-  min-width: 320px;
+  font-family: var(--font-mono);
+  font-size: clamp(0.8rem, 1.5vw, 1rem);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.line {
+.intro-terminal .line {
   opacity: 0;
-  transform: translateY(6px);
-  animation: typeIn 0.4s ease forwards;
+  color: var(--text-secondary);
 }
 
-.l1 { animation-delay: 0.3s; }
-.l2 { animation-delay: 0.8s; }
-.l3 { animation-delay: 1.2s; }
-.l4 { animation-delay: 1.6s; }
-.l5 { animation-delay: 2.2s; }
-
-.access {
-  margin-top: 12px;
-  font-size: 1.2rem;
-  letter-spacing: 2px;
-  color: #00eaff;
-  text-shadow: 0 0 20px rgba(0,234,255,0.6);
-  animation: accessPop 0.4s ease-out forwards;
-  animation-delay: 2.2s;
+.intro-terminal .prompt {
+  color: var(--primary);
+  margin-right: 6px;
 }
+
+.intro-terminal .check {
+  color: var(--success);
+  margin-right: 6px;
+}
+
+.l1 { animation: typeIn 0.4s ease forwards 0.3s; }
+.l2 { animation: typeIn 0.4s ease forwards 0.8s; }
+.l3 { animation: typeIn 0.4s ease forwards 1.2s; }
+.l4 { animation: typeIn 0.4s ease forwards 1.6s; }
+.l5 { animation: accessPop 0.5s ease forwards 2.2s; }
 
 @keyframes typeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
-@keyframes introOut {
-  0% { opacity: 1; }
-  85% { opacity: 1; }
-  100% {
-    opacity: 0;
-    pointer-events: none;
-  }
+.access {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  letter-spacing: 4px;
+  color: var(--primary);
+  text-shadow: 0 0 20px var(--primary-glow-strong), 0 0 60px var(--primary-glow);
 }
 
 @keyframes accessPop {
   from {
-    transform: scale(0.96);
-    opacity: 0.6;
+    opacity: 0;
+    transform: scale(0.8);
+    filter: blur(4px);
   }
   to {
-    transform: scale(1);
     opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
   }
+}
+
+/* ── Skip Hint ── */
+.intro-skip {
+  position: absolute;
+  bottom: 40px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  opacity: 0;
+  animation: fadeInSkip 0.5s ease forwards 1.5s;
+}
+
+@keyframes fadeInSkip {
+  to { opacity: 0.5; }
 }

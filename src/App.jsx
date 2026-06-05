@@ -6,14 +6,10 @@ import Projects from './components/Projects/Projects';
 import Cybersecurity from './components/Security/Cybersecurity.jsx';
 import About from './components/About/About';
 import Contact from './components/Contact/Contact';
+import Footer from './components/Footer/Footer';
 import useReveal from './useReveal';
 
-import { useEffect, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useSystem } from "./context/SystemContext.jsx";
-
-gsap.registerPlugin(ScrollTrigger);
+import { useEffect, useState, useRef, useCallback } from "react";
 
 // Global styles
 import './styles/reset.css';
@@ -29,36 +25,59 @@ function App() {
   useReveal();
 
   const [introDone, setIntroDone] = useState(false);
-  const { systemUnlocked } = useSystem();
+  const navbarRef = useRef(null);
 
+  // Glow cursor
   useEffect(() => {
     const cursor = document.createElement("div");
     cursor.className = "glow-cursor";
     document.body.appendChild(cursor);
 
-    window.addEventListener("mousemove", e => {
+    const onMove = (e) => {
       cursor.style.left = e.clientX + "px";
       cursor.style.top = e.clientY + "px";
-    });
+    };
+
+    window.addEventListener("mousemove", onMove);
+
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      cursor.remove();
+    };
+  }, []);
+
+  // Navbar scroll behavior
+  const handleScroll = useCallback(() => {
+    const navbar = navbarRef.current;
+    if (!navbar) return;
+
+    const currentScroll = window.scrollY;
+
+    if (currentScroll > 20) {
+      navbar.classList.add("scrolled");
+    } else {
+      navbar.classList.remove("scrolled");
+    }
   }, []);
 
   useEffect(() => {
     let lastScrollTop = 0;
     let isHidden = false;
-    const navbar = document.querySelector(".navbar");
 
     const THRESHOLD = 150;
     const DELTA = 8;
 
-    const handleScroll = () => {
+    const onScroll = () => {
+      const navbar = navbarRef.current;
+      if (!navbar) return;
+
       const currentScroll = window.scrollY;
       const diff = currentScroll - lastScrollTop;
 
       if (currentScroll > THRESHOLD && diff > DELTA && !isHidden) {
         navbar.classList.add("hidden");
         isHidden = true;
-      } 
-      else if (diff < -DELTA && isHidden) {
+      } else if (diff < -DELTA && isHidden) {
         navbar.classList.remove("hidden");
         isHidden = false;
       }
@@ -72,41 +91,14 @@ function App() {
       lastScrollTop = currentScroll;
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    if (!systemUnlocked) return;
-
-    const tl = gsap.timeline();
-
-    tl.to(".hero", {
-      scale: 0.95,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power2.out"
-    })
-    .set(".hero", { display: "none" })
-    .to(".story", {
-      opacity: 1,
-      pointerEvents: "auto",
-      duration: 0.6
-    })
-    .from(".story > section", {
-      y: 60,
-      opacity: 0,
-      stagger: 0.15,
-      duration: 0.8,
-      ease: "power2.out"
-    });
-
-  }, [systemUnlocked]);
-  
   return (
     <>
       {!introDone && <Intro onFinish={() => setIntroDone(true)} />}
-      <Navbar />
+      <Navbar ref={navbarRef} />
       <Hero />
       <div className="story">
         <About />
@@ -115,6 +107,7 @@ function App() {
         <Cybersecurity />
         <Contact />
       </div>
+      <Footer />
     </>
   );
 }

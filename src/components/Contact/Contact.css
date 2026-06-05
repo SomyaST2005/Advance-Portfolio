@@ -1,76 +1,246 @@
+/* ===== CONTACT SECTION ===== */
+
 .contact {
   background: radial-gradient(
-    circle at bottom,
-    #0b1020,
+    circle at 50% 100%,
+    rgba(11, 16, 32, 0.8),
     var(--bg-main)
   );
   text-align: center;
 }
 
-.terminal {
+/* ===== TERMINAL CARD ===== */
+
+.contact .terminal {
   max-width: 600px;
-  margin: 60px auto 0;
+  margin: 0 auto;
   text-align: left;
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-mono);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
+
+.contact-visible .terminal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== TERMINAL HEADER ===== */
 
 .terminal-header {
   display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 7px;
 }
 
 .dot {
-  width: 12px;
-  height: 12px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
+  transition: opacity var(--transition-fast) ease;
 }
 
-.red { background: #ff5f56; }
+.dot:hover {
+  opacity: 0.7;
+}
+
+.red   { background: #ff5f56; }
 .yellow { background: #ffbd2e; }
-.green { background: #27c93f; }
+.green  { background: #27c93f; }
+
+.terminal-title {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  opacity: 0.6;
+}
+
+/* ===== TERMINAL BODY ===== */
 
 .terminal-body {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+/* ===== TERMINAL LINES ===== */
+
+.terminal-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
 }
 
 .prompt {
   color: var(--primary);
-  margin-right: 6px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
 }
 
-.terminal-line {
-  margin-bottom: 10px;
-  animation: typingFade 0.6s ease both;
+.terminal-cmd {
+  color: var(--text-main);
+  font-size: 0.85rem;
 }
 
-@keyframes typingFade {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
+/* ===== TERMINAL OUTPUT ===== */
 
 .terminal-output {
-  color: var(--text-muted);
-  margin: 12px 0 18px;
+  margin: 8px 0 16px;
+  padding-left: 20px;
 }
+
+.output-text {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.7;
+}
+
+/* ===== CONTACT LINKS ===== */
 
 .terminal-links {
   display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 0 20px;
+  padding-left: 20px;
 }
 
-.terminal-links a {
+.terminal-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  text-decoration: none;
+  transition: all var(--transition-fast) ease;
+  width: fit-content;
+}
+
+.terminal-link:hover {
+  background: rgba(0, 229, 255, 0.06);
+  border-color: rgba(0, 229, 255, 0.2);
+  transform: translateX(4px);
+}
+
+.link-prefix {
   color: var(--accent);
-  border-bottom: 1px solid transparent;
-  transition: var(--transition-fast);
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  opacity: 0.8;
 }
 
-.terminal-links a:hover {
-  border-color: var(--accent);
+.link-label {
+  color: var(--text-main);
+  font-size: 0.85rem;
+  font-weight: 500;
 }
+
+.link-arrow {
+  color: var(--primary);
+  font-size: 0.8rem;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity var(--transition-fast) ease, transform var(--transition-fast) ease;
+}
+
+.terminal-link:hover .link-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ===== STATUS LINE ===== */
+
+.terminal-status {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.terminal-status .terminal-cmd {
+  color: var(--success);
+  opacity: 0.8;
+  font-size: 0.82rem;
+}
+
+/* ===== CURSOR BLINK ===== */
 
 .cursor {
-  animation: blink 1s infinite;
+  color: var(--primary);
+  font-weight: 700;
+  animation: blink 1s step-end infinite;
+}
+
+/* Typing animation for contact-visible terminal lines */
+.contact-visible .terminal-line:nth-child(1) {
+  animation: terminalTypeFade 0.4s ease 0.2s both;
+}
+
+.contact-visible .terminal-output {
+  animation: terminalTypeFade 0.4s ease 0.5s both;
+}
+
+.contact-visible .terminal-links {
+  animation: terminalTypeFade 0.4s ease 0.7s both;
+}
+
+.contact-visible .terminal-status {
+  animation: terminalTypeFade 0.4s ease 1s both;
+}
+
+.contact-visible .terminal-line:last-child {
+  animation: terminalTypeFade 0.4s ease 1.2s both;
+}
+
+@keyframes terminalTypeFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+  .contact .terminal {
+    max-width: 100%;
+  }
+
+  .terminal-link {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .terminal-body {
+    font-size: 0.82rem;
+  }
+
+  .terminal-cmd {
+    font-size: 0.78rem;
+  }
+
+  .terminal-title {
+    display: none;
+  }
+
+  .link-label {
+    font-size: 0.8rem;
+  }
 }
