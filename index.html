@@ -5,32 +5,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="./src/assets/display-code (2).png" />
+    <link rel="icon" type="image/png" href="/og-image.png" />
+    <link rel="apple-touch-icon" href="/og-image.png" />
 
-    <!-- Google Fonts -->
+    <!-- Canonical -->
+    <link rel="canonical" href="https://somyatiwari.dev" />
+
+    <!-- DNS Prefetch & Preconnect for Google Fonts -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Critical font preload (Inter 400 — body text) -->
+    <link
+      rel="preload"
+      as="font"
+      href="https://fonts.gstatic.com/s/inter/v19/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- Load fonts without render blocking -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
 
     <!-- SEO -->
-    <title>Somya Shekhar Tiwari — Full Stack Developer & Cybersecurity Enthusiast</title>
+    <title>Somya Shekhar Tiwari — Full Stack Developer &amp; Cybersecurity Enthusiast</title>
     <meta name="description" content="Portfolio of Somya Shekhar Tiwari — Full Stack Developer and Cybersecurity Enthusiast. B.Tech CSE at VIT Bhopal. Specializing in MERN stack, cloud, and security." />
     <meta name="author" content="Somya Shekhar Tiwari" />
     <meta name="keywords" content="Somya Shekhar Tiwari, Full Stack Developer, Cybersecurity, MERN, React, Portfolio, VIT Bhopal" />
+    <meta name="robots" content="index, follow" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Somya Shekhar Tiwari — Developer Portfolio" />
     <meta property="og:description" content="Full Stack Developer & Cybersecurity Enthusiast. Explore my projects, skills, and threat simulations." />
     <meta property="og:url" content="https://somyatiwari.dev" />
+    <meta property="og:image" content="https://somyatiwari.dev/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Somya Shekhar Tiwari — Developer Portfolio" />
     <meta name="twitter:description" content="Full Stack Developer & Cybersecurity Enthusiast. MERN, Cloud, Security." />
+    <meta name="twitter:image" content="https://somyatiwari.dev/og-image.png" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Somya Shekhar Tiwari",
+      "givenName": "Somya Shekhar",
+      "familyName": "Tiwari",
+      "url": "https://somyatiwari.dev",
+      "jobTitle": "Full Stack Developer",
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "VIT Bhopal"
+      },
+      "knowsAbout": [
+        "Full Stack Development",
+        "Cybersecurity",
+        "MERN Stack",
+        "React",
+        "Node.js",
+        "Cloud Computing"
+      ],
+      "sameAs": [
+        "https://github.com/SomyaST2005",
+        "https://www.linkedin.com/in/somya-shekhar-tiwari/"
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

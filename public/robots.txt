@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://somyatiwari.dev/sitemap.xml
