@@ -21,6 +21,7 @@ import './styles/global.css';
 import './components/shared/GlassCard.css';
 import './components/shared/NeonButton.css';
 import './components/shared/Animations.css';
+import './components/shared/TerminalChrome.css';
 
 function App() {
   useReveal();

@@ -5,257 +5,263 @@
     var(--bg-secondary),
     var(--bg-main)
   );
-  min-height: 80vh; /* VERY IMPORTANT */
+  min-height: 80vh;
   padding: var(--section-padding);
 }
 
 /* ===== About Layout Grid ===== */
 .about-layout {
   display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: 48px;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
   max-width: 1200px;
   margin: 48px auto 0;
   align-items: start;
 }
 
-.about-timeline-container {
-  width: 100%;
+/* ===== Shared About Terminal Panel ===== */
+.about-terminal {
+  background: rgba(5, 7, 13, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
 }
 
-@media (max-width: 1024px) {
-  .about-layout {
-    grid-template-columns: 1fr;
-    gap: 56px;
-    margin-top: 32px;
-  }
+/* ── Personnel Terminal (Left) ── */
+.personnel-terminal {
+  border-color: rgba(124, 77, 255, 0.18);
+  box-shadow:
+    0 0 24px rgba(124, 77, 255, 0.04),
+    inset 0 0 60px rgba(124, 77, 255, 0.015);
 }
 
-/* ===== Bio Section ===== */
-.about-bio {
-  width: 100%;
-  margin: 0;
+.personnel-terminal .terminal-chrome {
+  border-bottom-color: rgba(124, 77, 255, 0.12);
 }
 
-.about-bio-content {
+.personnel-body {
+  padding: 18px 24px 20px;
+}
+
+/* Hex address gutter */
+.record-hex {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: rgba(124, 77, 255, 0.30);
+  letter-spacing: 0.8px;
+  margin-bottom: 16px;
+  padding-left: 2px;
+  user-select: none;
+}
+
+/* ── Personnel Record Grid ── */
+.record-grid {
   display: flex;
-  align-items: flex-start;
-  gap: 40px;
+  flex-direction: column;
+  gap: 14px;
+  padding: 0 0 8px;
 }
 
-.about-bio-text {
-  flex: 1;
-}
-
-.about-bio-heading {
-  font-family: var(--font-heading);
-  font-size: clamp(1.15rem, 2vw, 1.4rem);
-  color: var(--text-main);
-  margin-bottom: 14px;
+.record-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
+  font-size: 0.84rem;
 }
 
-.about-bio-wave {
-  display: inline-block;
-  animation: wave 2.5s ease-in-out infinite;
-  transform-origin: 70% 70%;
+.record-label {
+  color: var(--text-muted);
+  white-space: pre;
+  flex-shrink: 0;
+  letter-spacing: 0.3px;
 }
 
-@keyframes wave {
-  0%, 100% { transform: rotate(0deg); }
-  10% { transform: rotate(14deg); }
-  20% { transform: rotate(-8deg); }
-  30% { transform: rotate(14deg); }
-  40% { transform: rotate(-4deg); }
-  50% { transform: rotate(10deg); }
-  60% { transform: rotate(0deg); }
-}
-
-.about-bio-text p {
-  color: var(--text-secondary);
-  font-size: clamp(0.92rem, 1.5vw, 1.02rem);
-  line-height: 1.75;
-}
-
-.about-bio-text strong {
+.record-value {
   color: var(--primary);
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-/* ===== Education Badge ===== */
-.about-edu {
+.record-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success-glow);
+  animation: statusPulse 2s ease-in-out infinite;
   flex-shrink: 0;
 }
 
-.about-edu-badge {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px 22px;
-  border-radius: var(--radius-sm);
-  background: rgba(0, 229, 255, 0.05);
-  border: 1px solid rgba(0, 229, 255, 0.12);
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--success-glow); }
+  50%      { opacity: 0.6; box-shadow: 0 0 14px var(--success-glow); }
 }
 
-.about-edu-icon {
-  font-size: 1.6rem;
+/* Record file footer */
+.record-footer {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(124, 77, 255, 0.08);
 }
 
-.about-edu-degree {
-  display: block;
-  font-family: var(--font-heading);
-  font-size: 0.85rem;
-  color: var(--primary);
-  letter-spacing: 0.5px;
-  margin-bottom: 2px;
-}
-
-.about-edu-school {
-  display: block;
-  font-size: 0.82rem;
-  color: var(--text-muted);
-}
-
-/* ===== Timeline Heading ===== */
-.about-timeline-heading {
-  font-family: var(--font-heading);
-  font-size: clamp(1rem, 1.8vw, 1.25rem);
-  color: var(--text-main);
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 24px;
-  letter-spacing: 1px;
-}
-
-/* ===== Timeline ===== */
-.timeline {
-  position: relative;
-  width: 100%;
-  margin: 0;
-  padding-left: 40px;
-}
-
-/* Vertical connecting line */
-.timeline-line {
-  position: absolute;
-  left: 18px;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: linear-gradient(
-    to bottom,
-    var(--primary),
-    var(--accent),
-    transparent
-  );
-  border-radius: 999px;
-}
-
-/* ===== Timeline Item ===== */
-.timeline-item {
-  position: relative;
-  margin-bottom: 36px;
-}
-
-.timeline-item:last-child {
-  margin-bottom: 0;
-}
-
-/* Dot on the timeline line */
-.timeline-dot {
-  position: absolute;
-  left: -30px;
-  top: 24px;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--bg-main);
-  border: 2px solid var(--primary);
-  box-shadow: 0 0 10px var(--primary-glow);
-  z-index: 2;
-  transition: var(--transition);
-}
-
-.timeline-item:hover .timeline-dot {
-  background: var(--primary);
-  box-shadow: 0 0 18px var(--primary-glow-strong);
-  transform: scale(1.25);
-}
-
-/* ===== Timeline Card ===== */
-.timeline-card {
-  position: relative;
-  padding: 24px 28px 24px 32px;
-  border-left: 3px solid var(--primary) !important;
-  transition: var(--transition);
-}
-
-.timeline-card:hover {
-  transform: translateX(6px);
-  box-shadow: 0 0 28px rgba(0, 229, 255, 0.15);
-}
-
-.timeline-year {
+.record-checksum {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.62rem;
+  color: rgba(124, 77, 255, 0.22);
+  letter-spacing: 0.6px;
+  user-select: none;
+  word-break: break-all;
+}
+
+/* ── Journey Terminal (Right) ── */
+.journey-terminal {
+  border-color: rgba(0, 229, 255, 0.15);
+  box-shadow:
+    0 0 24px rgba(0, 229, 255, 0.03),
+    inset 0 0 60px rgba(0, 229, 255, 0.01);
+}
+
+.journey-terminal .terminal-chrome {
+  border-bottom-color: rgba(0, 229, 255, 0.10);
+}
+
+.journey-body {
+  padding: 18px 24px 20px;
+}
+
+/* Log divider */
+.log-divider {
+  text-align: center;
+  padding: 6px 0;
+  margin: 4px 0 8px;
+  position: relative;
+}
+
+.log-divider-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: rgba(0, 229, 255, 0.18);
+  letter-spacing: 1px;
+  user-select: none;
+}
+
+/* ── Log Entries ── */
+.log-entries {
+  display: flex;
+  flex-direction: column;
+}
+
+.log-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  font-size: 0.82rem;
+  transition: background 0.2s ease;
+}
+
+.log-entry:last-child {
+  border-bottom: none;
+}
+
+.log-entry:hover {
+  background: rgba(0, 229, 255, 0.025);
+}
+
+.log-timestamp {
   color: var(--accent);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-  display: block;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-weight: 600;
+  font-size: 0.74rem;
+  padding-top: 1px;
 }
 
-.timeline-icon {
-  position: absolute;
-  top: 22px;
-  right: 20px;
-  font-size: 1.35rem;
-}
-
-.timeline-card h4 {
-  font-family: var(--font-heading);
-  font-size: clamp(0.95rem, 1.5vw, 1.08rem);
+.log-prompt {
   color: var(--primary);
-  margin-bottom: 10px;
-  letter-spacing: 0.5px;
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  padding-top: 1px;
+  opacity: 0.7;
 }
 
-.timeline-card p {
+.log-content {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.log-title {
+  font-family: var(--font-heading);
+  font-size: 0.84rem;
+  color: var(--text-main);
+  letter-spacing: 0.3px;
+}
+
+.log-desc {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
   color: var(--text-muted);
-  font-size: clamp(0.85rem, 1.3vw, 0.95rem);
-  line-height: 1.65;
+  line-height: 1.55;
+}
+
+/* ===== Responsive — 1024px ===== */
+@media (max-width: 1024px) {
+  .about-layout {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    margin-top: 32px;
+  }
+
+  .personnel-terminal,
+  .journey-terminal {
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
+  }
 }
 
 /* ===== Responsive — 768px ===== */
 @media (max-width: 768px) {
-  .about-bio-content {
-    flex-direction: column;
-    gap: 24px;
+  .about-layout {
+    gap: 40px;
   }
 
-  .about-edu-badge {
-    width: 100%;
-    justify-content: center;
+  .personnel-body,
+  .journey-body {
+    padding: 16px 18px 18px;
   }
 
-  .timeline {
-    padding-left: 34px;
+  .record-row {
+    font-size: 0.78rem;
   }
 
-  .timeline-line {
-    left: 14px;
+  .log-entry {
+    font-size: 0.76rem;
+    gap: 6px;
   }
 
-  .timeline-dot {
-    left: -27px;
-    width: 12px;
-    height: 12px;
+  .log-timestamp {
+    font-size: 0.70rem;
   }
 
-  .timeline-card {
-    padding: 20px 22px 20px 26px;
+  .log-title {
+    font-size: 0.78rem;
+  }
+
+  .log-desc {
+    font-size: 0.74rem;
+  }
+
+  .record-hex {
+    font-size: 0.60rem;
+  }
+
+  .record-checksum {
+    font-size: 0.58rem;
   }
 }
 
@@ -265,40 +271,52 @@
     padding: 72px 5vw;
   }
 
-  .about-bio {
-    margin-top: 32px;
+  .about-layout {
+    gap: 36px;
   }
 
-  .timeline {
-    padding-left: 28px;
-    margin-top: 28px;
+  .personnel-body,
+  .journey-body {
+    padding: 14px 14px 16px;
   }
 
-  .timeline-line {
-    left: 10px;
+  .record-row {
+    font-size: 0.74rem;
+    gap: 4px;
   }
 
-  .timeline-dot {
-    left: -24px;
-    width: 10px;
-    height: 10px;
+  .record-label {
+    font-size: 0.68rem;
+    letter-spacing: 0;
   }
 
-  .timeline-card {
-    padding: 16px 16px 16px 20px;
+  /* Log entries wrap for narrow screens */
+  .log-entry {
+    flex-wrap: wrap;
+    gap: 4px;
   }
 
-  .timeline-icon {
-    top: 14px;
-    right: 14px;
-    font-size: 1.1rem;
+  .log-timestamp {
+    font-size: 0.68rem;
   }
 
-  .timeline-item {
-    margin-bottom: 24px;
+  .log-content {
+    width: calc(100% - 40px);
   }
 
-  .about-timeline-heading {
-    margin-top: 48px;
+  .log-title {
+    font-size: 0.74rem;
+  }
+
+  .log-desc {
+    font-size: 0.72rem;
+  }
+
+  .record-hex {
+    display: none;
+  }
+
+  .record-checksum {
+    font-size: 0.55rem;
   }
 }
