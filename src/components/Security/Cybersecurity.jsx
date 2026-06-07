@@ -120,7 +120,7 @@ export default function Cybersecurity() {
           />
 
           <div className="simulation-explanation">
-            <h4>{PHASE_EXPLANATIONS[phase]?.title}</h4>
+            <h3>{PHASE_EXPLANATIONS[phase]?.title}</h3>
             <p>{PHASE_EXPLANATIONS[phase]?.desc}</p>
           </div>
         </div>
