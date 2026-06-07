@@ -73,18 +73,64 @@
 }
 
 /* =========================
-   Node Labels
-========================= */
-.node-label {
-  margin-top: 8px;
-  font-size: clamp(0.65rem, 1.2vw, 0.78rem);
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  opacity: 0.7;
-  text-align: center;
+   Node Labels & Titles
+ ========================= */
+.node-title {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 600;
+  fill: var(--text-main);
+  letter-spacing: 1.2px;
+}
+
+.node-subtitle {
   font-family: var(--font-mono);
+  font-size: 0.65rem;
+  fill: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.attacker-label.node-title {
+  fill: var(--danger) !important;
+}
+
+.attacker-label.node-subtitle {
+  fill: rgba(255, 77, 77, 0.75) !important;
+}
+
+/* =========================
+   Simulation Explanation
+ ========================= */
+.simulation-explanation {
+  margin-top: 16px;
+  padding: 16px 24px 8px;
+  width: 100%;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+  text-align: left;
+  animation: explanationFade 0.4s ease-out;
+}
+
+.simulation-explanation h4 {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  color: var(--primary);
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.simulation-explanation p {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
   color: var(--text-secondary);
-  transition: opacity var(--transition) ease, color var(--transition) ease;
+  line-height: 1.6;
+}
+
+@keyframes explanationFade {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* =========================

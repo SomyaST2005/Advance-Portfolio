@@ -45,9 +45,14 @@ export default function ThreatSimulation({
     <svg className="threat-svg" viewBox="0 0 700 300">
 
       {/* Labels */}
-      <text x="80" y="110" className="node-label">Sender</text>
-      <text x="350" y="110" className="node-label">Security</text>
-      <text x="620" y="110" className="node-label">Receiver</text>
+      <text x={POS.sender} y="200" textAnchor="middle" className="node-title">SENDER</text>
+      <text x={POS.sender} y="216" textAnchor="middle" className="node-subtitle">(User Browser)</text>
+
+      <text x={POS.security} y="202" textAnchor="middle" className="node-title">FIREWALL</text>
+      <text x={POS.security} y="218" textAnchor="middle" className="node-subtitle">(WAF / Gateway)</text>
+
+      <text x={POS.receiver} y="200" textAnchor="middle" className="node-title">SERVER</text>
+      <text x={POS.receiver} y="216" textAnchor="middle" className="node-subtitle">(Target DB)</text>
 
       {/* Nodes */}
       <circle cx={POS.sender} cy="150" r="22" className="node" />
@@ -117,11 +122,19 @@ export default function ThreatSimulation({
 
               <text
                 x={POS.security}
-                y={POS.attackerY - 25}
-                className="node-label attacker-label"
+                y={POS.attackerY - 22}
+                className="node-title attacker-label"
                 textAnchor="middle"
               >
-                Attacker
+                INTRUDER
+              </text>
+              <text
+                x={POS.security}
+                y={POS.attackerY - 37}
+                className="node-subtitle attacker-label"
+                textAnchor="middle"
+              >
+                (Malicious IP)
               </text>
 
               {/* Connection line eases in */}
@@ -180,11 +193,19 @@ export default function ThreatSimulation({
 
           <text
             x={POS.security}
-            y={POS.attackerY - 25}
-            className="node-label attacker-label"
+            y={POS.attackerY - 22}
+            className="node-title attacker-label"
             textAnchor="middle"
           >
-            Attacker
+            INTRUDER
+          </text>
+          <text
+            x={POS.security}
+            y={POS.attackerY - 37}
+            className="node-subtitle attacker-label"
+            textAnchor="middle"
+          >
+            (Malicious IP)
           </text>
 
 

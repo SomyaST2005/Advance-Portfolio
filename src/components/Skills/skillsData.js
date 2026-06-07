@@ -1,78 +1,66 @@
 export const skills = [
-  // CENTER
-  { id: "me", label: "Somya", type: "center" },
-
-  // CORE CLUSTERS (angle in degrees, radius in %)
   {
     id: "programming",
-    label: "Programming",
-    type: "core",
-    angle: 210,
-    radius: 26,
-    links: ["java", "cpp", "python", "javascript"],
-    examples: ["Competitive Coding", "Backend Systems"]
+    label: "/programming/",
+    proficiency: 80,
+    color: "#00e5ff",
+    examples: ["Competitive Coding", "Backend Systems", "OOP Design Patterns"],
+    children: [
+      { label: "Java", proficiency: 85 },
+      { label: "C++", proficiency: 80 },
+      { label: "Python", proficiency: 78 },
+      { label: "JavaScript", proficiency: 82 }
+    ]
   },
   {
     id: "mern",
-    label: "MERN Stack",
-    type: "core",
-    angle: 160,
-    radius: 24,
-    links: ["react", "node", "express", "mongodb"],
-    examples: ["Auth System", "Steganography Web App"]
+    label: "/mern-stack/",
+    proficiency: 88,
+    color: "#7c4dff",
+    examples: ["Auth System", "Steganography Web App", "RESTful APIs"],
+    children: [
+      { label: "React.js", proficiency: 85 },
+      { label: "Node.js", proficiency: 82 },
+      { label: "Express.js", proficiency: 80 },
+      { label: "MongoDB", proficiency: 78 }
+    ]
   },
   {
     id: "cloud",
-    label: "Cloud & DevOps",
-    type: "core",
-    angle: 90,
-    radius: 28,
-    links: ["aws", "docker", "kubernetes"],
-    examples: ["Containerized Apps", "Cloud Deployment"]
+    label: "/cloud-devops/",
+    proficiency: 65,
+    color: "#7cffc4",
+    examples: ["Containerized Apps", "Cloud Deployment", "CI/CD Pipelines"],
+    children: [
+      { label: "AWS", proficiency: 60 },
+      { label: "Docker", proficiency: 68 },
+      { label: "Kubernetes", proficiency: 55 }
+    ]
   },
   {
     id: "security",
-    label: "Cybersecurity",
-    type: "core",
-    angle: 30,
-    radius: 26,
-    links: ["encryption", "nmap", "steganography", "owasp"],
-    examples: ["LSB Encoding", "Threat Simulation"]
+    label: "/cybersecurity/",
+    proficiency: 75,
+    color: "#ff4d4d",
+    examples: ["LSB Encoding", "Threat Simulation", "Vulnerability Assessment"],
+    children: [
+      { label: "Encryption", proficiency: 78 },
+      { label: "Nmap", proficiency: 70 },
+      { label: "Steganography", proficiency: 82 },
+      { label: "OWASP ZAP", proficiency: 65 }
+    ]
   },
   {
     id: "cs",
-    label: "Computer Science",
-    type: "core",
-    angle: 300,
-    radius: 28,
-    links: ["dsa", "dbms", "os", "networks"],
-    examples: ["Algorithm Design", "System Architecture"]
-  },
-
-
-  // === SUB SKILLS (fan around parent) ===
-  { id: "java", label: "Java", parent: "programming", offset: -45 },
-  { id: "cpp", label: "C++", parent: "programming", offset: -20 },
-  { id: "python", label: "Python", parent: "programming", offset: 20 },
-  { id: "javascript", label: "JavaScript", parent: "programming", offset: 45},
-
-  { id: "react", label: "React.js", parent: "mern", offset: -45 },
-  { id: "node", label: "Node.js", parent: "mern", offset: -15 },
-  { id: "express", label: "Express.js", parent: "mern", offset: 15 },
-  { id: "mongodb", label: "MongoDB", parent: "mern", offset: 45 },
-
-  { id: "aws", label: "AWS", parent: "cloud", offset: -30 },
-  { id: "docker", label: "Docker", parent: "cloud", offset: 0 },
-  { id: "kubernetes", label: "Kubernetes", parent: "cloud", offset: 30 },
-
-  { id: "encryption", label: "Encryption", parent: "security", offset: -45 },
-  { id: "nmap", label: "Nmap", parent: "security", offset: -15 },
-  { id: "steganography", label: "Steganography", parent: "security", offset: 15 },
-  { id: "owasp", label: "OWASP ZAP", parent: "security", offset: 45 },
-
-  { id: "dsa", label: "DSA", parent: "cs", offset: -45 },
-  { id: "dbms", label: "DBMS", parent: "cs", offset: -15 },
-  { id: "os", label: "Operating Systems", parent: "cs", offset: 15 },
-  { id: "networks", label: "Computer Networks", parent: "cs", offset: 45 },
-
+    label: "/cs-fundamentals/",
+    proficiency: 82,
+    color: "#ffd740",
+    examples: ["Algorithm Design", "System Architecture", "Competitive Programming"],
+    children: [
+      { label: "DSA", proficiency: 84 },
+      { label: "DBMS", proficiency: 76 },
+      { label: "Operating Systems", proficiency: 72 },
+      { label: "Computer Networks", proficiency: 74 }
+    ]
+  }
 ];

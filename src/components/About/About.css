@@ -9,10 +9,32 @@
   padding: var(--section-padding);
 }
 
+/* ===== About Layout Grid ===== */
+.about-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 48px;
+  max-width: 1200px;
+  margin: 48px auto 0;
+  align-items: start;
+}
+
+.about-timeline-container {
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .about-layout {
+    grid-template-columns: 1fr;
+    gap: 56px;
+    margin-top: 32px;
+  }
+}
+
 /* ===== Bio Section ===== */
 .about-bio {
-  max-width: 900px;
-  margin: 48px auto 0;
+  width: 100%;
+  margin: 0;
 }
 
 .about-bio-content {
@@ -102,16 +124,16 @@
   font-size: clamp(1rem, 1.8vw, 1.25rem);
   color: var(--text-main);
   text-align: center;
-  margin-top: 72px;
-  margin-bottom: 8px;
+  margin-top: 0;
+  margin-bottom: 24px;
   letter-spacing: 1px;
 }
 
 /* ===== Timeline ===== */
 .timeline {
   position: relative;
-  max-width: 700px;
-  margin: 40px auto 0;
+  width: 100%;
+  margin: 0;
   padding-left: 40px;
 }
 

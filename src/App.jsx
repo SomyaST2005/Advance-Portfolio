@@ -4,6 +4,7 @@ import Hero from './components/Hero/Hero';
 import Skills from './components/Skills/Skills';
 import Projects from './components/Projects/Projects';
 import Cybersecurity from './components/Security/Cybersecurity.jsx';
+import Achievements from './components/Achievements/Achievements';
 import About from './components/About/About';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
@@ -102,6 +103,7 @@ function App() {
       <Hero />
       <div className="story">
         <About />
+        <Achievements />
         <Skills />
         <Projects />
         <Cybersecurity />

@@ -3,6 +3,25 @@ import ThreatSimulation from "./ThreatSimulation";
 import ThreatLog from "./ThreatLog";
 import "./Cybersecurity.css";
 
+const PHASE_EXPLANATIONS = {
+  NORMAL: {
+    title: "System Status: SECURE (Passive Monitoring)",
+    desc: "The network is operating normally. Legitimate traffic (green packets) flows freely from the user browser (Sender) to the target server (Receiver) without interception. The Firewall actively monitors connections."
+  },
+  TAMPERING: {
+    title: "Intrusion Alert: INTERCEPTION ATTEMPT",
+    desc: "An Intruder (malicious IP) is attempting to intercept and tamper with the active data transmission. The firewall detects anomalies and halts the packet at the security gateway for analysis."
+  },
+  ATTACK_PACKET: {
+    title: "Threat Mitigated: MALICIOUS PAYLOAD DETECTED",
+    desc: "The Intruder sends a malicious exploit packet (red dot) directly into the gateway. The Firewall's Intrusion Prevention system drops the malicious packet and deploys security upgrades to protect the server."
+  },
+  DELIVERING: {
+    title: "Session Secured: TRANSMITTING PROTECTED DATA",
+    desc: "With the threats blocked and cryptography verified, the firewall establishes a secure channel. The original, verified packet is released and safely delivered to the server."
+  }
+};
+
 export default function Cybersecurity() {
   const ref = useRef(null);
   const hasAutoRun = useRef(false);
@@ -86,18 +105,25 @@ export default function Cybersecurity() {
       </p>
 
       <div className="security-lab">
-        <ThreatSimulation
-          phase={phase}
-          onTamperingDetected={handleTamperingDetected}
-          onSuspiciousPacket={handleSuspiciousPacket}
-          onMaliciousBlocked={handleMaliciousBlocked}
-          onDataSecured={handleDataSecured}
-          onDataProtected={() => {
-            handleDataProtected();
-            setTimeout(() => setPhase("DELIVERING"), 600);
-          }}
-          onDataReceived={handleDataReceived}
-        />
+        <div className="threat-visual">
+          <ThreatSimulation
+            phase={phase}
+            onTamperingDetected={handleTamperingDetected}
+            onSuspiciousPacket={handleSuspiciousPacket}
+            onMaliciousBlocked={handleMaliciousBlocked}
+            onDataSecured={handleDataSecured}
+            onDataProtected={() => {
+              handleDataProtected();
+              setTimeout(() => setPhase("DELIVERING"), 600);
+            }}
+            onDataReceived={handleDataReceived}
+          />
+
+          <div className="simulation-explanation">
+            <h4>{PHASE_EXPLANATIONS[phase]?.title}</h4>
+            <p>{PHASE_EXPLANATIONS[phase]?.desc}</p>
+          </div>
+        </div>
 
         <ThreatLog events={events} />
       </div>

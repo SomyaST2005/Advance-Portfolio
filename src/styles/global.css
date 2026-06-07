@@ -86,8 +86,6 @@ section {
   );
   transform: translate(-50%, -50%);
   z-index: 9999;
-  transition: left 0.08s linear, top 0.08s linear;
-  will-change: left, top;
 }
 
 /* ── Reduced Motion ── */

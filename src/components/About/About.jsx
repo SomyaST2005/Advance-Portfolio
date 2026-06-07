@@ -67,63 +67,67 @@ export default function About() {
         Get to know my journey in tech and engineering
       </p>
 
-      {/* Bio Section */}
-      <motion.div
-        className="about-bio glass-card"
-        variants={bioVariant}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-80px" }}
-      >
-        <div className="about-bio-content">
-          <div className="about-bio-text">
-            <h3 className="about-bio-heading">
-              <span className="about-bio-wave">👋</span> Hello, I'm Somya
-            </h3>
-            <p>
-              A passionate Computer Science Engineering student at{" "}
-              <strong>VIT Bhopal University</strong>, driven by curiosity for
-              full-stack development and cybersecurity. I love turning ideas
-              into elegant, functional digital experiences and exploring the
-              intersection of security and modern web technologies.
-            </p>
-          </div>
-          <div className="about-edu">
-            <div className="about-edu-badge">
-              <span className="about-edu-icon">🎓</span>
-              <div>
-                <span className="about-edu-degree">B.Tech — CSE</span>
-                <span className="about-edu-school">VIT Bhopal University</span>
+      <div className="about-layout">
+        {/* Left Column: Bio */}
+        <motion.div
+          className="about-bio glass-card"
+          variants={bioVariant}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+        >
+          <div className="about-bio-content">
+            <div className="about-bio-text">
+              <h3 className="about-bio-heading">
+                <span className="about-bio-wave">👋</span> Hello, I'm Somya
+              </h3>
+              <p>
+                A passionate Computer Science Engineering student at{" "}
+                <strong>VIT Bhopal University</strong>, driven by curiosity for
+                full-stack development and cybersecurity. I love turning ideas
+                into elegant, functional digital experiences and exploring the
+                intersection of security and modern web technologies.
+              </p>
+            </div>
+            <div className="about-edu">
+              <div className="about-edu-badge">
+                <span className="about-edu-icon">🎓</span>
+                <div>
+                  <span className="about-edu-degree">B.Tech — CSE</span>
+                  <span className="about-edu-school">VIT Bhopal University</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
 
-      {/* Timeline */}
-      <h3 className="about-timeline-heading">Engineering Journey</h3>
+        {/* Right Column: Journey */}
+        <div className="about-timeline-container">
+          <h3 className="about-timeline-heading">Engineering Journey</h3>
 
-      <motion.div
-        className="timeline"
-        variants={container}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-100px" }}
-      >
-        <div className="timeline-line" aria-hidden="true" />
+          <motion.div
+            className="timeline"
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <div className="timeline-line" aria-hidden="true" />
 
-        {milestones.map((m, i) => (
-          <motion.div className="timeline-item" variants={item} key={i}>
-            <div className="timeline-dot" aria-hidden="true" />
-            <div className="timeline-card glass-card">
-              <span className="timeline-year">{m.year}</span>
-              <span className="timeline-icon">{m.icon}</span>
-              <h4>{m.title}</h4>
-              <p>{m.description}</p>
-            </div>
+            {milestones.map((m, i) => (
+              <motion.div className="timeline-item" variants={item} key={i}>
+                <div className="timeline-dot" aria-hidden="true" />
+                <div className="timeline-card glass-card">
+                  <span className="timeline-year">{m.year}</span>
+                  <span className="timeline-icon">{m.icon}</span>
+                  <h4>{m.title}</h4>
+                  <p>{m.description}</p>
+                </div>
+              </motion.div>
+            ))}
           </motion.div>
-        ))}
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 }
